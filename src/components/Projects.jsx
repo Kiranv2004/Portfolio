@@ -7,16 +7,29 @@ import './Projects.css';
 const projects = [
     {
         title: 'Student Face Attendance System',
-        description: 'A real-time biometric attendance system using deep learning-based face recognition and anti-spoofing techniques. Features facial detection via dlib, OpenCV live detection, MediaPipe for anti-spoofing, Flask backend, and MongoDB database.',
-        tech: ['Python', 'OpenCV', 'Flask', 'MongoDB', 'dlib', 'MediaPipe'],
+        description: 'Developed a real-time AI-based attendance system where students register facial images with personal details. Face images are converted into 128-dimensional encodings using face_recognition and dlib and stored in a database.',
+        tech: ['Python', 'MiniFASNet', 'dlib', 'MediaPipe', 'OpenCV', 'MongoDB'],
         highlights: [
-            'Deep learning-based face recognition',
-            'Anti-spoofing via MediaPipe (prevents photo/video attacks)',
-            'Real-time camera authentication',
-            'Automated attendance marking',
+            'Three-layer verification via MiniFASNet (Anti-spoofing)',
+            'Euclidean distance-based face matching',
+            'Mask-aware detection using MediaPipe',
+            'Automated attendance & email notifications',
         ],
         gradient: 'linear-gradient(135deg, #00d4ff, #0088cc)',
         emoji: '👁️',
+    },
+    {
+        title: 'Portfolio Builder From Resume',
+        description: 'A full-stack web application that automatically generates professional portfolios from resume data. Features parsed resume extraction, dynamic website generation, and secure user authentication.',
+        tech: ['React', 'Spring Boot', 'Java', 'Tailwind CSS', 'Docker', 'JWT'],
+        highlights: [
+            'Intelligent Resume Parsing Engine',
+            'Dynamic Portfolio Generation',
+            'Secure JWT Authentication & Session Management',
+            'Production-ready Docker Containerization',
+        ],
+        gradient: 'linear-gradient(135deg, #FF512F, #DD2476)',
+        emoji: '🚀',
     },
     {
         title: 'Carbon Footprint Analysis for Indian Coal Mines',
