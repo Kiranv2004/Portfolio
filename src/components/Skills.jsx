@@ -75,31 +75,20 @@ const Skills = () => {
                                 <h3 className="skills__category-title">{category.title}</h3>
                             </div>
 
-                            <div className="skills__list">
+                            <div className="skills__list-grid">
                                 {category.skills.map((skill, si) => (
                                     <motion.div
                                         key={skill.name}
-                                        className="skills__item"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                                        transition={{ duration: 0.4, delay: ci * 0.1 + si * 0.05 }}
+                                        className="skills__badge"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={inView ? { opacity: 1, scale: 1 } : {}}
+                                        transition={{ duration: 0.3, delay: ci * 0.1 + si * 0.05 }}
+                                        whileHover={{ y: -5, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                     >
-                                        <div className="skills__item-header">
-                                            <div className="skills__item-icon" style={{ color: skill.color }}>
-                                                {skill.icon}
-                                            </div>
-                                            <span className="skills__item-name">{skill.name}</span>
-                                            <span className="skills__item-pct">{skill.level}%</span>
+                                        <div className="skills__badge-icon" style={{ color: skill.color }}>
+                                            {skill.icon}
                                         </div>
-                                        <div className="skills__bar">
-                                            <motion.div
-                                                className="skills__bar-fill"
-                                                style={{ background: `linear-gradient(90deg, ${skill.color}, ${skill.color}88)` }}
-                                                initial={{ width: 0 }}
-                                                animate={inView ? { width: `${skill.level}%` } : {}}
-                                                transition={{ duration: 1, delay: ci * 0.1 + si * 0.1 }}
-                                            />
-                                        </div>
+                                        <span className="skills__badge-name">{skill.name}</span>
                                     </motion.div>
                                 ))}
                             </div>

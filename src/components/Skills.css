@@ -25,59 +25,38 @@
     font-weight: 600;
 }
 
-.skills__list {
+.skills__list-grid {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.skills__item-header {
+.skills__badge {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 6px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    cursor: default;
+    transition: all 0.3s ease;
 }
 
-.skills__item-icon {
-    font-size: 1.2rem;
+.skills__badge:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
+}
+
+.skills__badge-icon {
     display: flex;
+    font-size: 1.4rem;
 }
 
-.skills__item-name {
-    font-size: 0.9rem;
+.skills__badge-name {
+    font-size: 0.95rem;
     font-weight: 500;
-}
-
-.skills__item-pct {
-    margin-left: auto;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.skills__bar {
-    height: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.skills__bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    position: relative;
-}
-
-.skills__bar-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: shimmer 2s ease-in-out infinite;
-    background-size: 200% 100%;
+    color: var(--text-primary);
 }
 
 @media (max-width: 768px) {
