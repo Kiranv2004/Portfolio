@@ -1,0 +1,137 @@
+.activities__content {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 28px;
+}
+
+.activities__interests-section {
+    grid-column: 1 / -1;
+}
+
+.activities__heading {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.activities__heading-icon {
+    font-size: 1.2rem;
+}
+
+.activities__hackathons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activities__hack-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+}
+
+.activities__hack-badge {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.activities__hack-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.activities__hack-result {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.activities__hack-detail {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.activities__side {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.activities__workshops {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.activities__workshop-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+}
+
+.activities__languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.activities__lang-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    min-width: 80px;
+}
+
+.activities__lang-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.activities__lang-level {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.activities__interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.activities__interest {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    cursor: pointer;
+}
+
+.activities__interest-emoji {
+    font-size: 1.4rem;
+}
+
+.activities__interest-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .activities__content {
+        grid-template-columns: 1fr;
+    }
+}

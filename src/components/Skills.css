@@ -1,0 +1,87 @@
+.skills__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.skills__category {
+    padding: 28px;
+}
+
+.skills__category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.skills__category-icon {
+    font-size: 1.5rem;
+}
+
+.skills__category-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.skills__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skills__item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.skills__item-icon {
+    font-size: 1.2rem;
+    display: flex;
+}
+
+.skills__item-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.skills__item-pct {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.skills__bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.skills__bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+}
+
+.skills__bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s ease-in-out infinite;
+    background-size: 200% 100%;
+}
+
+@media (max-width: 768px) {
+    .skills__grid {
+        grid-template-columns: 1fr;
+    }
+}
