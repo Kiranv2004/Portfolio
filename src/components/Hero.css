@@ -188,7 +188,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: var(--bg-secondary);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -215,7 +215,7 @@
 
 .hero__floating-badges {
     position: absolute;
-    inset: -30px;
+    inset: 0;
 }
 
 .hero__badge {
@@ -232,23 +232,23 @@
 }
 
 .hero__badge--1 {
-    top: 10%;
-    left: -10%;
+    top: 5%;
+    left: 0%;
 }
 
 .hero__badge--2 {
-    top: 5%;
-    right: -10%;
+    top: 10%;
+    right: -5%;
 }
 
 .hero__badge--3 {
-    bottom: 20%;
-    left: -15%;
+    bottom: 15%;
+    left: -5%;
 }
 
 .hero__badge--4 {
     bottom: 5%;
-    right: -10%;
+    right: 0%;
 }
 
 /* Scroll Indicator */
