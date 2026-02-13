@@ -1,85 +1,221 @@
 .education__list {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 .education__card {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     align-items: flex-start;
-    padding: 28px;
+    padding: 32px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Faint border */
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border-radius: var(--radius-lg);
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
+/* Shimmer sweep effect */
+.education__card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.04),
+            transparent);
+    animation: edu-shimmer 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes edu-shimmer {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 200%;
+    }
+}
+
+/* Hover effects */
+.education__card:hover {
+    border-color: var(--edu-color);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5),
+        0 0 20px color-mix(in srgb, var(--edu-color) 20%, transparent);
+    transform: translateY(-5px);
+}
+
+/* Corner pulsing dot */
+.education__card::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--edu-color);
+    box-shadow: 0 0 10px var(--edu-color);
+    opacity: 0.5;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+}
+
+/* Icon box */
 .education__icon {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius-md);
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--edu-color) 12%, transparent);
+    color: var(--edu-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     flex-shrink: 0;
+    border: 1px solid color-mix(in srgb, var(--edu-color) 30%, transparent);
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--edu-color) 15%, transparent);
 }
 
 .education__info {
     flex: 1;
 }
 
+/* Typography */
 .education__degree {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    color: #fff;
 }
 
 .education__institution {
-    color: var(--accent-cyan);
-    font-size: 0.92rem;
-    font-weight: 500;
-    margin-bottom: 8px;
+    color: var(--edu-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 14px;
 }
 
-.education__meta {
-    margin-bottom: 10px;
+/* Metadata row */
+.education__meta-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.education__period {
+.education__period,
+.education__result-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    color: var(--text-muted);
-}
-
-.education__result-row {
-    margin-bottom: 10px;
-}
-
-.education__result {
-    font-size: 0.9rem;
-    font-weight: 600;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-secondary);
 }
 
+.education__period svg,
+.education__result-badge svg {
+    color: var(--edu-color);
+}
+
+.education__result-badge {
+    background: color-mix(in srgb, var(--edu-color) 10%, transparent);
+    border-color: color-mix(in srgb, var(--edu-color) 25%, transparent);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Progress bar */
+.education__bar-container {
+    margin-top: 10px;
+}
+
+.education__bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
 .education__bar {
-    height: 6px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .education__bar-fill {
     height: 100%;
-    border-radius: 3px;
+    background: linear-gradient(90deg, var(--edu-color), #fff);
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Floating glow tip on bar */
+.education__bar-glow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: #fff;
+    filter: blur(8px);
+    opacity: 0.6;
+    z-index: 2;
+    transform: translateX(-50%);
 }
 
 @media (max-width: 768px) {
     .education__card {
         flex-direction: column;
-        align-items: stretch;
-        gap: 14px;
+        gap: 18px;
+        padding: 24px;
+    }
+
+    .education__icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .education__meta-row {
+        gap: 10px;
     }
 }

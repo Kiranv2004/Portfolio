@@ -57,7 +57,7 @@ const Footer = () => {
 
             <div className="footer__bottom">
                 <p>
-                    © 2025 Kiran V. Made with <FaHeart className="footer__heart" /> in India
+                    © 2026 Kiran V. <br /> Made by Kiran V
                 </p>
             </div>
         </footer>

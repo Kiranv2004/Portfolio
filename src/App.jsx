@@ -9,7 +9,7 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Certifications from './components/Certifications';
 import Activities from './components/Activities';
-import Contact from './components/Contact';
+import ContactSection from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <Education />
         <Certifications />
         <Activities />
-        <Contact />
+        <ContactSection />
       </main>
       <Footer />
     </>

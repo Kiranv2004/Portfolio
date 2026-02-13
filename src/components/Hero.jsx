@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaDownload } from 'react-icons/fa';
+import { useInView } from 'react-intersection-observer';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import './Hero.css';
 
 const roles = [
@@ -11,10 +12,33 @@ const roles = [
     'Full Stack Developer',
 ];
 
+const stagger = {
+    hidden: {},
+    visible: {
+        transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+    },
+};
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const fadeLeft = {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const scaleIn = {
+    hidden: { opacity: 0, scale: 0.7 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+};
+
 const Hero = () => {
     const [roleIndex, setRoleIndex] = useState(0);
     const [displayText, setDisplayText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
+    const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
     useEffect(() => {
         const currentRole = roles[roleIndex];
@@ -39,61 +63,56 @@ const Hero = () => {
     }, [displayText, isDeleting, roleIndex]);
 
     return (
-        <section id="home" className="hero">
+        <section id="home" className="hero" ref={ref}>
             <div className="hero__bg-shapes">
                 <div className="hero__shape hero__shape--1" />
                 <div className="hero__shape hero__shape--2" />
                 <div className="hero__shape hero__shape--3" />
             </div>
 
-            <div className="container hero__content">
-                <motion.div
-                    className="hero__text"
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    <motion.div
-                        className="hero__greeting"
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                    >
+            <motion.div
+                className="container hero__content"
+                variants={stagger}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+            >
+                <motion.div className="hero__text" variants={fadeUp}>
+                    <motion.div className="hero__greeting" variants={fadeLeft}>
                         <span className="hero__wave">👋</span>
                         <span>Hello, I'm</span>
                     </motion.div>
 
-                    <h1 className="hero__name">
+                    <motion.h1 className="hero__name" variants={fadeUp}>
                         <span className="gradient-text">Kiran V</span>
-                    </h1>
+                    </motion.h1>
 
-                    <div className="hero__role">
+                    <motion.div className="hero__role" variants={fadeUp}>
                         <span className="hero__role-prefix">I'm a </span>
                         <span className="hero__role-text">{displayText}</span>
                         <span className="hero__cursor">|</span>
-                    </div>
+                    </motion.div>
 
-                    <p className="hero__desc">
+                    <motion.p className="hero__desc" variants={fadeUp}>
                         Motivated individual with a keen interest in Software Engineering, Web Development
                         and Artificial Intelligence. Eager to apply technical skills, learn new technologies,
                         and contribute to impactful real-world projects.
-                    </p>
+                    </motion.p>
 
-                    <div className="hero__location">
+                    <motion.div className="hero__location" variants={fadeUp}>
                         <FaMapMarkerAlt />
                         <span>Mallandahalli, Kolar, Karnataka, India</span>
-                    </div>
+                    </motion.div>
 
-                    <div className="hero__actions">
+                    <motion.div className="hero__actions" variants={fadeUp}>
                         <a href="#contact" className="btn-primary">
                             Get In Touch
                         </a>
-                        <a href="#projects" className="btn-outline">
-                            View Projects
+                        <a href="/Kiran_V.pdf" target="_blank" rel="noopener noreferrer" className="btn-resume">
+                            Download CV 📄
                         </a>
-                    </div>
+                    </motion.div>
 
-                    <div className="hero__socials">
+                    <motion.div className="hero__socials" variants={fadeUp}>
                         <motion.a
                             href="https://github.com/Kiranv2004"
                             target="_blank"
@@ -130,15 +149,10 @@ const Hero = () => {
                         >
                             <FaPhone />
                         </motion.a>
-                    </div>
+                    </motion.div>
                 </motion.div>
 
-                <motion.div
-                    className="hero__visual"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                >
+                <motion.div className="hero__visual" variants={scaleIn}>
                     <div className="hero__avatar-ring">
                         <div className="hero__avatar-glow" />
                         <div className="hero__avatar">
@@ -176,12 +190,13 @@ const Hero = () => {
                         </motion.div>
                     </div>
                 </motion.div>
-            </div>
+            </motion.div>
 
             <motion.div
                 className="hero__scroll-indicator"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1, y: [0, 10, 0] } : {}}
+                transition={{ opacity: { delay: 2, duration: 1 }, y: { duration: 2, repeat: Infinity, delay: 2 } }}
             >
                 <div className="hero__scroll-mouse">
                     <div className="hero__scroll-wheel" />

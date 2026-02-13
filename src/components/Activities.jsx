@@ -29,23 +29,26 @@ const hackathons = [
     },
 ];
 
-const workshops = ['IOT Workshop', 'Python for Data Science Workshop'];
+const workshops = [
+    { name: 'IOT Workshop', color: '#00d4ff', icon: '📡' },
+    { name: 'Python for Data Science Workshop', color: '#3776ab', icon: '🐍' }
+];
 
 const interests = [
-    { name: 'Coding & Problem-Solving', emoji: '💻' },
-    { name: 'AI & Machine Learning', emoji: '🤖' },
-    { name: 'Programming Frameworks', emoji: '🔧' },
-    { name: 'Farming', emoji: '🌾' },
-    { name: 'Playing Cricket', emoji: '🏏' },
-    { name: 'Reading Books', emoji: '📚' },
-    { name: 'Cooking', emoji: '🍳' },
+    { name: 'Coding & Problem-Solving', emoji: '💻', color: '#00d4ff' },
+    { name: 'AI & Machine Learning', emoji: '🤖', color: '#7b2ff7' },
+    { name: 'Programming Frameworks', emoji: '🔧', color: '#ff6b35' },
+    { name: 'Farming', emoji: '🌾', color: '#00e676' },
+    { name: 'Playing Cricket', emoji: '🏏', color: '#ff2d95' },
+    { name: 'Reading Books', emoji: '📚', color: '#ffd700' },
+    { name: 'Cooking', emoji: '🍳', color: '#ff9800' },
 ];
 
 const languages = [
-    { name: 'Kannada', level: 'Native' },
-    { name: 'English', level: 'Fluent' },
-    { name: 'Telugu', level: 'Fluent' },
-    { name: 'Hindi', level: 'Conversational' },
+    { name: 'Kannada', level: 'Native', color: '#ff6b35' },
+    { name: 'English', level: 'Fluent', color: '#00d4ff' },
+    { name: 'Telugu', level: 'Fluent', color: '#7b2ff7' },
+    { name: 'Hindi', level: 'Conversational', color: '#00e676' },
 ];
 
 const Activities = () => {
@@ -80,15 +83,17 @@ const Activities = () => {
                                     animate={inView ? { opacity: 1, x: 0 } : {}}
                                     transition={{ duration: 0.4, delay: i * 0.1 }}
                                     whileHover={{ scale: 1.02 }}
+                                    style={{ '--act-color': h.color }}
                                 >
                                     <span className="activities__hack-badge">{h.badge}</span>
                                     <div>
-                                        <h4 className="activities__hack-name">{h.name}</h4>
-                                        <div className="activities__hack-result" style={{ color: h.color }}>
+                                        <h4 className="activities__hack-name" style={{ color: h.color }}>{h.name}</h4>
+                                        <div className="activities__hack-result">
                                             {h.result}
                                         </div>
                                         <span className="activities__hack-detail">{h.detail}</span>
                                     </div>
+                                    <div className="activities__card-glow" />
                                 </motion.div>
                             ))}
                         </div>
@@ -108,9 +113,13 @@ const Activities = () => {
                             </h3>
                             <div className="activities__workshops">
                                 {workshops.map((w, i) => (
-                                    <div key={i} className="activities__workshop-item glass-card">
-                                        <FaBookOpen style={{ color: 'var(--accent-cyan)' }} />
-                                        <span>{w}</span>
+                                    <div
+                                        key={i}
+                                        className="activities__workshop-item glass-card"
+                                        style={{ '--act-color': w.color }}
+                                    >
+                                        <span style={{ fontSize: '1.2rem' }}>{w.icon}</span>
+                                        <span className="activities__workshop-name">{w.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -128,8 +137,12 @@ const Activities = () => {
                             </h3>
                             <div className="activities__languages">
                                 {languages.map((l, i) => (
-                                    <div key={i} className="activities__lang-tag">
-                                        <span className="activities__lang-name">{l.name}</span>
+                                    <div
+                                        key={i}
+                                        className="activities__lang-tag"
+                                        style={{ '--act-color': l.color }}
+                                    >
+                                        <span className="activities__lang-name" style={{ color: l.color }}>{l.name}</span>
                                         <span className="activities__lang-level">{l.level}</span>
                                     </div>
                                 ))}
@@ -155,9 +168,10 @@ const Activities = () => {
                                     className="activities__interest glass-card"
                                     whileHover={{ scale: 1.06, y: -4 }}
                                     transition={{ type: 'spring', stiffness: 300 }}
+                                    style={{ '--act-color': int.color }}
                                 >
                                     <span className="activities__interest-emoji">{int.emoji}</span>
-                                    <span className="activities__interest-name">{int.name}</span>
+                                    <span className="activities__interest-name" style={{ color: int.color }}>{int.name}</span>
                                 </motion.div>
                             ))}
                         </div>

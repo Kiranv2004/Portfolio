@@ -5,7 +5,7 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane
 import SectionWrapper from './SectionWrapper';
 import './Contact.css';
 
-const Contact = () => {
+const ContactSection = () => {
     const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
     const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
     const [focused, setFocused] = useState('');
@@ -28,13 +28,17 @@ const Contact = () => {
 
     return (
         <SectionWrapper id="contact">
+            <div className="contact__bg-grid" />
+
+            {/* Floating Cyber Orbs */}
+            <div className="contact__orb contact__orb--1" />
+            <div className="contact__orb contact__orb--2" />
+            <div className="contact__orb contact__orb--3" />
+
             <div className="container">
                 <div className="section-header">
-                    <span className="section-label">Let&apos;s connect</span>
+                    <span className="section-label">Initialize_Connection</span>
                     <h2 className="section-title">Get In Touch</h2>
-                    <p className="section-subtitle">
-                        Have a project in mind or want to collaborate? Feel free to reach out!
-                    </p>
                 </div>
 
                 <div className="contact__content" ref={ref}>
@@ -44,16 +48,18 @@ const Contact = () => {
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ duration: 0.6 }}
                     >
-                        <h3 className="contact__info-title">Let's talk about everything!</h3>
+                        <h3 className="contact__info-title">
+                            <span className="typing-effect">Let's build the future.</span>
+                        </h3>
                         <p className="contact__info-desc">
-                            I'm always open to discussing new projects, creative ideas, or opportunities
-                            to be part of your vision. Let's build something amazing together.
+                            Initiating collaboration protocols. I'm ready to deploy my skills for your next big project.
+                            Available for freelance, full-time, or collaborative missions.
                         </p>
 
                         <div className="contact__details">
                             {contactInfo.map((info, i) => (
                                 <a key={i} href={info.href} className="contact__detail glass-card">
-                                    <div className="contact__detail-icon" style={{ color: info.color }}>
+                                    <div className="contact__detail-icon" style={{ boxShadow: `0 0 15px ${info.color}40`, color: info.color }}>
                                         {info.icon}
                                     </div>
                                     <div>
@@ -65,95 +71,70 @@ const Contact = () => {
                         </div>
 
                         <div className="contact__socials">
-                            <a href="https://github.com/Kiranv2004" target="_blank" rel="noopener noreferrer" className="contact__social">
-                                <FaGithub />
-                            </a>
-                            <a href="https://linkedin.com/in/kiran-v-4b1384281" target="_blank" rel="noopener noreferrer" className="contact__social">
-                                <FaLinkedin />
-                            </a>
-                            <a href="mailto:kiranv20042@gmail.com" className="contact__social">
-                                <FaEnvelope />
-                            </a>
+                            {[
+                                { icon: <FaGithub />, href: "https://github.com/Kiranv2004" },
+                                { icon: <FaLinkedin />, href: "https://linkedin.com/in/kiran-v-4b1384281" },
+                                { icon: <FaEnvelope />, href: "mailto:kiranv20042@gmail.com" }
+                            ].map((social, i) => (
+                                <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="contact__social">
+                                    {social.icon}
+                                </a>
+                            ))}
                         </div>
                     </motion.div>
 
-                    <motion.form
-                        className="contact__form glass-card"
-                        onSubmit={handleSubmit}
+                    <motion.div
+                        className="contact__form-wrapper"
                         initial={{ opacity: 0, x: 40 }}
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ duration: 0.6 }}
                     >
-                        <div className={`contact__field ${focused === 'name' || formData.name ? 'contact__field--active' : ''}`}>
-                            <label className="contact__label">Your Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="contact__input"
-                                value={formData.name}
-                                onChange={handleChange}
-                                onFocus={() => setFocused('name')}
-                                onBlur={() => setFocused('')}
-                                required
-                            />
-                        </div>
+                        <form className="contact__form" onSubmit={handleSubmit}>
+                            <div className="contact__scanner-line" />
 
-                        <div className={`contact__field ${focused === 'email' || formData.email ? 'contact__field--active' : ''}`}>
-                            <label className="contact__label">Your Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                className="contact__input"
-                                value={formData.email}
-                                onChange={handleChange}
-                                onFocus={() => setFocused('email')}
-                                onBlur={() => setFocused('')}
-                                required
-                            />
-                        </div>
+                            {['name', 'email', 'subject'].map((field) => (
+                                <div key={field} className={`contact__field ${focused === field || formData[field] ? 'contact__field--active' : ''}`}>
+                                    <label className="contact__label">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                                    <input
+                                        type={field === 'email' ? 'email' : 'text'}
+                                        name={field}
+                                        className="contact__input"
+                                        value={formData[field]}
+                                        onChange={handleChange}
+                                        onFocus={() => setFocused(field)}
+                                        onBlur={() => setFocused('')}
+                                        required
+                                        autoComplete="off"
+                                    />
+                                    {focused === field && <div className="contact__corner-brackets" />}
+                                </div>
+                            ))}
 
-                        <div className={`contact__field ${focused === 'subject' || formData.subject ? 'contact__field--active' : ''}`}>
-                            <label className="contact__label">Subject</label>
-                            <input
-                                type="text"
-                                name="subject"
-                                className="contact__input"
-                                value={formData.subject}
-                                onChange={handleChange}
-                                onFocus={() => setFocused('subject')}
-                                onBlur={() => setFocused('')}
-                                required
-                            />
-                        </div>
+                            <div className={`contact__field ${focused === 'message' || formData.message ? 'contact__field--active' : ''}`}>
+                                <label className="contact__label">Message</label>
+                                <textarea
+                                    name="message"
+                                    className="contact__input contact__textarea"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    onFocus={() => setFocused('message')}
+                                    onBlur={() => setFocused('')}
+                                    rows="5"
+                                    required
+                                />
+                                {focused === 'message' && <div className="contact__corner-brackets" />}
+                            </div>
 
-                        <div className={`contact__field ${focused === 'message' || formData.message ? 'contact__field--active' : ''}`}>
-                            <label className="contact__label">Message</label>
-                            <textarea
-                                name="message"
-                                className="contact__input contact__textarea"
-                                value={formData.message}
-                                onChange={handleChange}
-                                onFocus={() => setFocused('message')}
-                                onBlur={() => setFocused('')}
-                                rows="5"
-                                required
-                            />
-                        </div>
-
-                        <motion.button
-                            type="submit"
-                            className="btn-primary contact__submit"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <FaPaperPlane />
-                            Send Message
-                        </motion.button>
-                    </motion.form>
+                            <button type="submit" className="contact__submit">
+                                <span className="contact__submit-text">TRANSMIT DATA</span>
+                                <FaPaperPlane className="contact__submit-icon" />
+                            </button>
+                        </form>
+                    </motion.div>
                 </div>
             </div>
         </SectionWrapper>
     );
 };
 
-export default Contact;
+export default ContactSection;

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaGraduationCap, FaCalendarAlt } from 'react-icons/fa';
+import { FaGraduationCap, FaCalendarAlt, FaAward } from 'react-icons/fa';
 import SectionWrapper from './SectionWrapper';
 import './Education.css';
 
@@ -48,31 +48,59 @@ const Education = () => {
                             key={i}
                             className="education__card glass-card"
                             initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                            animate={inView ? { opacity: 1, x: 0 } : {}}
-                            transition={{ duration: 0.6, delay: i * 0.15 }}
+                            animate={inView ? { opacity: 1, x: 0, y: [0, -5, 0] } : {}}
+                            transition={{
+                                opacity: { duration: 0.6, delay: i * 0.15 },
+                                x: { duration: 0.6, delay: i * 0.15 },
+                                y: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 2 + i * 0.5 }
+                            }}
+                            whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+                            style={{ '--edu-color': edu.color }}
                         >
-                            <div className="education__icon" style={{ background: `${edu.color}15`, color: edu.color }}>
-                                <FaGraduationCap />
+                            {/* Animated background glow */}
+                            <div className="education__card-glow" />
+
+                            <div className="education__icon">
+                                <motion.div
+                                    animate={inView ? { rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] } : {}}
+                                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
+                                >
+                                    <FaGraduationCap />
+                                </motion.div>
                             </div>
+
                             <div className="education__info">
                                 <h3 className="education__degree">{edu.degree}</h3>
                                 <h4 className="education__institution">{edu.institution}</h4>
-                                <div className="education__meta">
+
+                                <div className="education__meta-row">
                                     <span className="education__period">
                                         <FaCalendarAlt /> {edu.period}
                                     </span>
+                                    <span className="education__result-badge">
+                                        <FaAward /> {edu.result}
+                                    </span>
                                 </div>
-                                <div className="education__result-row">
-                                    <span className="education__result">{edu.result}</span>
-                                </div>
-                                <div className="education__bar">
-                                    <motion.div
-                                        className="education__bar-fill"
-                                        style={{ background: `linear-gradient(90deg, ${edu.color}, ${edu.color}88)` }}
-                                        initial={{ width: 0 }}
-                                        animate={inView ? { width: `${edu.percentage}%` } : {}}
-                                        transition={{ duration: 1.2, delay: i * 0.2 }}
-                                    />
+
+                                <div className="education__bar-container">
+                                    <div className="education__bar-label">
+                                        <span>Performance</span>
+                                        <span>{edu.percentage}%</span>
+                                    </div>
+                                    <div className="education__bar">
+                                        <motion.div
+                                            className="education__bar-fill"
+                                            initial={{ width: 0 }}
+                                            animate={inView ? { width: `${edu.percentage}%` } : {}}
+                                            transition={{ duration: 1.5, delay: i * 0.2 + 0.5, ease: 'easeOut' }}
+                                        />
+                                        <motion.div
+                                            className="education__bar-glow"
+                                            initial={{ left: 0 }}
+                                            animate={inView ? { left: `${edu.percentage}%` } : {}}
+                                            transition={{ duration: 1.5, delay: i * 0.2 + 0.5, ease: 'easeOut' }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

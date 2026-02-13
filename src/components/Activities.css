@@ -135,3 +135,44 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Dynamic Color Hover Effects */
+.activities__hack-card,
+.activities__workshop-item,
+.activities__lang-tag,
+.activities__interest {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    /* Ensure glass background and border are set if not already */
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+}
+
+.activities__hack-card:hover,
+.activities__workshop-item:hover,
+.activities__lang-tag:hover,
+.activities__interest:hover {
+    border-color: var(--act-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px var(--act-color);
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, var(--bg-glass), rgba(255, 255, 255, 0.03));
+}
+
+/* Special glow for hackathon cards */
+.activities__card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, var(--act-color), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.activities__hack-card:hover .activities__card-glow {
+    opacity: 0.15;
+}
