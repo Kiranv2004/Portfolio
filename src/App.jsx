@@ -24,10 +24,13 @@ function App() {
                 {showSplash && <SplashScreen key="splash" onEnter={() => setShowSplash(false)} />}
             </AnimatePresence>
 
+            {/* Navbar lives outside app-container so CSS transform/filter on the
+                container don't trap its position:fixed and cause it to disappear */}
+            {!showSplash && <Navbar />}
+
             <div className={`app-container ${showSplash ? 'loading' : ''}`}>
                 <ParticleBackground />
                 <MouseGlow />
-                <Navbar />
                 <main style={{ position: 'relative', zIndex: 2 }}>
                     <Hero />
                     <About />
