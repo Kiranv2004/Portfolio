@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import ParticleBackground from './components/ParticleBackground';
 import MouseGlow from './components/MouseGlow';
 import Navbar from './components/Navbar';
@@ -11,25 +12,32 @@ import Certifications from './components/Certifications';
 import Activities from './components/Activities';
 import ContactSection from './components/Contact';
 import Footer from './components/Footer';
+import SplashScreen from './components/SplashScreen';
 
 function App() {
+    const [showSplash, setShowSplash] = useState(true);
+
     return (
         <>
-            <ParticleBackground />
-            <MouseGlow />
-            <Navbar />
-            <main style={{ position: 'relative', zIndex: 2 }}>
-                <Hero />
-                <About />
-                <Skills />
-                <Experience />
-                <Projects />
-                <Education />
-                <Certifications />
-                <Activities />
-                <ContactSection />
-            </main>
-            <Footer />
+            {showSplash && <SplashScreen onEnter={() => setShowSplash(false)} />}
+
+            <div className={`app-container ${showSplash ? 'loading' : ''}`}>
+                <ParticleBackground />
+                <MouseGlow />
+                <Navbar />
+                <main style={{ position: 'relative', zIndex: 2 }}>
+                    <Hero />
+                    <About />
+                    <Skills />
+                    <Experience />
+                    <Projects />
+                    <Education />
+                    <Certifications />
+                    <Activities />
+                    <ContactSection />
+                </main>
+                <Footer />
+            </div>
         </>
     );
 }

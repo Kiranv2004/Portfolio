@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
 import './Hero.css';
 
 const roles = [
@@ -97,11 +97,6 @@ const Hero = () => {
                         and Artificial Intelligence. Eager to apply technical skills, learn new technologies,
                         and contribute to impactful real-world projects.
                     </motion.p>
-
-                    <motion.div className="hero__location" variants={fadeUp}>
-                        <FaMapMarkerAlt />
-                        <span>Mallandahalli, Kolar, Karnataka, India</span>
-                    </motion.div>
 
                     <motion.div className="hero__actions" variants={fadeUp}>
                         <a href="#contact" className="btn-primary">
