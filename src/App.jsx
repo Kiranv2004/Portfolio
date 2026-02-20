@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import ParticleBackground from './components/ParticleBackground';
 import MouseGlow from './components/MouseGlow';
 import Navbar from './components/Navbar';
@@ -19,7 +20,9 @@ function App() {
 
     return (
         <>
-            {showSplash && <SplashScreen onEnter={() => setShowSplash(false)} />}
+            <AnimatePresence>
+                {showSplash && <SplashScreen key="splash" onEnter={() => setShowSplash(false)} />}
+            </AnimatePresence>
 
             <div className={`app-container ${showSplash ? 'loading' : ''}`}>
                 <ParticleBackground />

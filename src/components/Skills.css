@@ -182,9 +182,35 @@
     opacity: 0.1;
 }
 
-.skills__card:hover {
+.skills__card:hover,
+.skills__card--active {
     border-color: var(--skill-color);
     box-shadow: 0 0 20px color-mix(in srgb, var(--skill-color) 25%, transparent);
+}
+
+.skills__card:hover::before,
+.skills__card--active::before {
+    opacity: 0.1;
+}
+
+.skills__card:hover .skills__card-glow,
+.skills__card--active .skills__card-glow {
+    opacity: 0.5;
+}
+
+.skills__card:hover .skills__card-shine,
+.skills__card--active .skills__card-shine {
+    left: 200%;
+}
+
+.skills__card:hover .skills__card-icon,
+.skills__card--active .skills__card-icon {
+    filter: drop-shadow(0 0 10px var(--skill-color));
+}
+
+.skills__card:hover .skills__card-name,
+.skills__card--active .skills__card-name {
+    color: var(--skill-color);
 }
 
 /* Bottom glow */

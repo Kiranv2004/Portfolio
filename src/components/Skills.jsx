@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef, useCallback, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import {
     FaPython, FaJava, FaHtml5, FaCss3Alt, FaJs, FaDatabase, FaGitAlt, FaGithub, FaReact
@@ -55,16 +55,71 @@ const skillCategories = [
     },
 ];
 
+// ---- Individual skill card with its own active state ----
+const SkillCard = ({ skill, si, ci, inView, isActive, onActivate, onDeactivate }) => {
+    const iconControls = useAnimation();
+
+    useEffect(() => {
+        if (isActive) {
+            iconControls.start({ rotate: 360, scale: 1.3, transition: { duration: 0.55, ease: 'easeInOut' } });
+        } else {
+            iconControls.start({ rotate: 0, scale: 1, transition: { duration: 0.25 } });
+        }
+    }, [isActive, iconControls]);
+
+    return (
+        <motion.div
+            className={`skills__card${isActive ? ' skills__card--active' : ''}`}
+            data-skill-index={si}
+            initial={{ opacity: 0, y: 30, scale: 0.6, rotate: -10 }}
+            animate={inView ? {
+                opacity: 1,
+                y: isActive ? -8 : [0, -5, 0],
+                scale: isActive ? 1.12 : 1,
+                rotate: 0,
+            } : {}}
+            transition={{
+                opacity: { duration: 0.5, delay: ci * 0.15 + si * 0.08 + 0.2 },
+                scale: {
+                    duration: isActive ? 0.2 : 0.5,
+                    delay: isActive ? 0 : ci * 0.15 + si * 0.08 + 0.2,
+                    type: isActive ? 'tween' : 'spring',
+                    stiffness: 200,
+                },
+                rotate: { duration: 0.5, delay: ci * 0.15 + si * 0.08 + 0.2 },
+                y: isActive
+                    ? { duration: 0.18 }
+                    : { duration: 2.5 + si * 0.3, repeat: Infinity, ease: 'easeInOut', delay: 1 + ci * 0.2 + si * 0.15 },
+            }}
+            style={{ '--skill-color': skill.color }}
+            onMouseEnter={onActivate}
+            onMouseLeave={onDeactivate}
+        >
+            <motion.div
+                className="skills__card-icon"
+                style={{ color: skill.color }}
+                animate={iconControls}
+            >
+                {skill.icon}
+            </motion.div>
+            <span className="skills__card-name">{skill.name}</span>
+            <div className="skills__card-glow" />
+            <div className="skills__card-shine" />
+        </motion.div>
+    );
+};
+
 const CategoryCard3D = ({ category, ci, inView }) => {
     const cardRef = useRef(null);
     const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 });
+    const [activeSkillIndex, setActiveSkillIndex] = useState(-1);
 
-    const handleMouseMove = useCallback((e) => {
+    const applyTilt = useCallback((clientX, clientY) => {
         const card = cardRef.current;
         if (!card) return;
         const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
         const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -8;
         const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
         setTilt({
@@ -75,9 +130,25 @@ const CategoryCard3D = ({ category, ci, inView }) => {
         });
     }, []);
 
-    const handleMouseLeave = useCallback(() => {
-        setTilt({ rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 });
+    const handleMouseMove = useCallback((e) => applyTilt(e.clientX, e.clientY), [applyTilt]);
+    const handleTouchMove = useCallback((e) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+        applyTilt(touch.clientX, touch.clientY);
+    }, [applyTilt]);
+    const resetTilt = useCallback(() => setTilt({ rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 }), []);
+
+    // Detect which skill card the finger is currently over during swipe
+    const handleGridTouchMove = useCallback((e) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+        const el = document.elementFromPoint(touch.clientX, touch.clientY);
+        const card = el?.closest('[data-skill-index]');
+        const idx = card ? parseInt(card.getAttribute('data-skill-index'), 10) : -1;
+        setActiveSkillIndex(idx);
     }, []);
+
+    const handleGridTouchEnd = useCallback(() => setActiveSkillIndex(-1), []);
 
     return (
         <motion.div
@@ -99,7 +170,10 @@ const CategoryCard3D = ({ category, ci, inView }) => {
                 rotateY: { duration: 0.15, ease: 'easeOut' },
             }}
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave={resetTilt}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={resetTilt}
+            onTouchCancel={resetTilt}
             style={{
                 '--cat-accent': category.accent,
                 '--glow-x': `${tilt.glowX}%`,
@@ -129,48 +203,23 @@ const CategoryCard3D = ({ category, ci, inView }) => {
                 <h3 className="skills__category-title">{category.title}</h3>
             </div>
 
-            <div className="skills__list-grid">
+            <div
+                className="skills__list-grid"
+                onTouchMove={handleGridTouchMove}
+                onTouchEnd={handleGridTouchEnd}
+                onTouchCancel={handleGridTouchEnd}
+            >
                 {category.skills.map((skill, si) => (
-                    <motion.div
+                    <SkillCard
                         key={skill.name}
-                        className="skills__card"
-                        initial={{ opacity: 0, y: 30, scale: 0.6, rotate: -10 }}
-                        animate={inView ? {
-                            opacity: 1,
-                            y: [0, -5, 0],
-                            scale: 1,
-                            rotate: 0,
-                        } : {}}
-                        transition={{
-                            opacity: { duration: 0.5, delay: ci * 0.15 + si * 0.08 + 0.2 },
-                            scale: { duration: 0.5, delay: ci * 0.15 + si * 0.08 + 0.2, type: 'spring', stiffness: 200 },
-                            rotate: { duration: 0.5, delay: ci * 0.15 + si * 0.08 + 0.2 },
-                            y: { duration: 2.5 + si * 0.3, repeat: Infinity, ease: 'easeInOut', delay: 1 + ci * 0.2 + si * 0.15 },
-                        }}
-                        whileHover={{
-                            scale: 1.12,
-                            y: -8,
-                            rotate: [0, -2, 2, 0],
-                            transition: { duration: 0.3 },
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        style={{ '--skill-color': skill.color }}
-                    >
-                        <motion.div
-                            className="skills__card-icon"
-                            style={{ color: skill.color }}
-                            whileHover={{
-                                rotate: 360,
-                                scale: 1.3,
-                                transition: { duration: 0.6, ease: 'easeInOut' },
-                            }}
-                        >
-                            {skill.icon}
-                        </motion.div>
-                        <span className="skills__card-name">{skill.name}</span>
-                        <div className="skills__card-glow" />
-                        <div className="skills__card-shine" />
-                    </motion.div>
+                        skill={skill}
+                        si={si}
+                        ci={ci}
+                        inView={inView}
+                        isActive={activeSkillIndex === si}
+                        onActivate={() => setActiveSkillIndex(si)}
+                        onDeactivate={() => setActiveSkillIndex(-1)}
+                    />
                 ))}
             </div>
         </motion.div>
