@@ -120,7 +120,7 @@ const SplashScreen = ({ onEnter }) => {
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                 >
-                    Enter Portfolio
+                    Enter To Portfolio
                     <svg className="sp__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
