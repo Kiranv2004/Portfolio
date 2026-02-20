@@ -7,6 +7,30 @@
   overflow: hidden;
 }
 
+/* Main App Entry Animation - Top Down */
+.app-container {
+  opacity: 0;
+  transform: translateY(-50px) scale(0.98);
+  filter: blur(10px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1.2s ease-out;
+  will-change: opacity, transform, filter;
+}
+
+.app-container:not(.loading) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.loading {
+  /* Main content behind splash: visible but blurred */
+  opacity: 1;
+  transform: scale(1.1);
+  filter: blur(20px);
+}
+
 :root {
   --bg-primary: #0a0a1a;
   --bg-secondary: #0f0f23;
