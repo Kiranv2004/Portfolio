@@ -26,7 +26,8 @@ const ParticleBackground = () => {
 
     const init = () => {
       particles = [];
-      const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      // Reduced count for better performance: 80 -> 40
+      const count = Math.min(40, Math.floor((canvas.width * canvas.height) / 20000));
       for (let i = 0; i < count; i++) {
         particles.push(createParticle());
       }
@@ -37,11 +38,12 @@ const ParticleBackground = () => {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          // Optimization: Avoid Math.sqrt by comparing squared distance
+          const distSq = dx * dx + dy * dy;
 
-          if (distance < 150) {
+          if (distSq < 22500) { // 150 * 150
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 * (1 - distSq / 22500)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

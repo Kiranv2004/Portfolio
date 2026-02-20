@@ -105,7 +105,10 @@ const Navbar = () => {
                                     key={link.name}
                                     href={link.href}
                                     className={`navbar__mobile-link ${activeSection === link.href.slice(1) ? 'navbar__link--active' : ''}`}
-                                    onClick={(e) => { e.preventDefault(); handleClick(link.href); }}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleClick(link); // Pass object, not string
+                                    }}
                                     initial={{ opacity: 0, x: 50 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.05 }}
