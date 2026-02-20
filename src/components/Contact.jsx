@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 import SectionWrapper from './SectionWrapper';
 import './Contact.css';
 
@@ -23,7 +23,6 @@ const ContactSection = () => {
     const contactInfo = [
         { icon: <FaEnvelope />, label: 'Email', value: 'kiranv20042@gmail.com', href: 'mailto:kiranv20042@gmail.com', color: '#00d4ff' },
         { icon: <FaPhone />, label: 'Phone', value: '+91 9110655575', href: 'tel:+919110655575', color: '#7b2ff7' },
-        { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Mallandahalli, Kolar, Karnataka', href: '#', color: '#ff2d95' },
     ];
 
     return (

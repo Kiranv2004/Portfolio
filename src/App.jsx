@@ -13,25 +13,25 @@ import ContactSection from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
-  return (
-    <>
-      <ParticleBackground />
-      <MouseGlow />
-      <Navbar />
-      <main style={{ position: 'relative', zIndex: 2 }}>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-        <Certifications />
-        <Activities />
-        <ContactSection />
-      </main>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <ParticleBackground />
+            <MouseGlow />
+            <Navbar />
+            <main style={{ position: 'relative', zIndex: 2 }}>
+                <Hero />
+                <About />
+                <Skills />
+                <Experience />
+                <Projects />
+                <Education />
+                <Certifications />
+                <Activities />
+                <ContactSection />
+            </main>
+            <Footer />
+        </>
+    );
 }
 
 export default App;
